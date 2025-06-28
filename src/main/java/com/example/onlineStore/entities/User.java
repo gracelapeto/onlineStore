@@ -1,9 +1,6 @@
 package com.example.onlineStore.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import org.aspectj.weaver.ast.Var;
 
@@ -18,7 +15,8 @@ public class User {
     private String city;
     private String address;
     private String avatarUrl;
-
-
+@ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
 }
