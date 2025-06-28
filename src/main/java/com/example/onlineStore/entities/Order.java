@@ -14,8 +14,11 @@ public class Order {
     private Long id;
     private String name;
     private String address;
-    private Long price;
+    private Double totalPrice;
     private LocalDateTime orderDate;
+    @ManyToOne
+    @JoinColumn(name = "client")
+    private User user;
 
 
 
