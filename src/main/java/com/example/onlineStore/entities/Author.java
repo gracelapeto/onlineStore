@@ -1,8 +1,6 @@
 package com.example.onlineStore.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -11,8 +9,9 @@ import lombok.Data;
 
 public class Author {
     @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String firstname;
     private String lastname;
 
 }
