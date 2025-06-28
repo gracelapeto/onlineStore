@@ -17,7 +17,7 @@ public class User {
     private String password;
     private String city;
     private String address;
-    private String avatar;
+    private String avatarUrl;
 
 
 
