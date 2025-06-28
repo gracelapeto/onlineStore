@@ -1,8 +1,6 @@
 package com.example.onlineStore.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -11,7 +9,15 @@ import lombok.Data;
 
 public class Product {
     @Id
-    private String Title;
-    private String Description;
-    private Long price;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String title;
+    private String description;
+    private Double price;
+    @ManyToOne
+    @JoinColumn (name = "author")
+    private Author author;
+    @ManyToOne
+    @JoinColumn(name = "category")
+    private Category category;
 }
