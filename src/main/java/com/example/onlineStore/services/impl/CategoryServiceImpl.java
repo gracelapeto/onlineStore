@@ -2,6 +2,7 @@ package com.example.onlineStore.services.impl;
 
 import com.example.onlineStore.entities.Category;
 import com.example.onlineStore.repositories.CategoryRepository;
+import com.example.onlineStore.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CategoryServiceImpl {
+public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
 
@@ -39,15 +40,20 @@ public class CategoryServiceImpl {
         categoryRepository.deleteById(id);
     }
 
-    public Optional<Category> findCategoryById(Long id) {
+    public Optional<Category> findById(Long id) {
         return categoryRepository.findById(id);
     }
 
-    public List<Category> findAllCategories() {
+    public List<Category> findAll() {
         return categoryRepository.findAll();
     }
 
-    public Optional<Object> findCategoryByName(String name) {
+    public Optional<Object> findByName(String name) {
         return categoryRepository.findByName(name);
+    }
+
+    @Override
+    public Category createCategory(CategoryRepository repository) {
+        return null;
     }
 }
