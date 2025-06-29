@@ -4,6 +4,7 @@ import com.example.onlineStore.entities.User;
 import com.example.onlineStore.repositories.RoleRepository;
 import com.example.onlineStore.repositories.UserRepository;
 import com.example.onlineStore.services.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,8 +22,6 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
 
-
-
     @Override
     public User save(User user) {
         User savedUser = userRepository.save(user);
@@ -38,4 +37,13 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
-}
+
+
+    @Override
+    public void activateUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("User not found with id: " + id));
+        user.setActive(true);
+        userRepository.save(user);
+}}
