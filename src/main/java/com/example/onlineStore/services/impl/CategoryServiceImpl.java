@@ -19,6 +19,7 @@ public class CategoryServiceImpl implements CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
+    @Override
     public Category createCategory(Category category) {
         if (categoryRepository.findByNameIgnoreCase(category.getName()).isPresent()) {
             throw new IllegalArgumentException("Category already exists with name: " + category.getName());
@@ -26,6 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.save(category);
     }
 
+    @Override
     public Category updateCategory(Long id, Category categoryDetails) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Category not found with id: " + id));
@@ -33,15 +35,9 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.save(category);
     }
 
-    public void deleteCategory(Long id) {
-        if (!categoryRepository.existsById(id)) {
-            throw new IllegalArgumentException("Category not found with id: " + id);
-        }
-        categoryRepository.deleteById(id);
-    }
 
-    public Optional<Category> findById(Long id) {
-        return categoryRepository.findById(id);
+    public Category findById(Long id) {
+        return categoryRepository.findById(id).orElseThrow();
     }
 
     public List<Category> findAll() {
@@ -50,10 +46,5 @@ public class CategoryServiceImpl implements CategoryService {
 
     public Category findByName(String name) {
         return categoryRepository.findByNameIgnoreCase(name).orElseThrow();
-    }
-
-    @Override
-    public Category createCategory(CategoryRepository repository) {
-        return null;
     }
 }
