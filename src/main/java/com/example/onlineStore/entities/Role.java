@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Entity
 @Data
+
 public class Role {
     @Id
     private String name;

@@ -14,6 +14,7 @@ public class User {
     private String city;
     private String address;
     private String avatarUrl;
+    private Boolean active;
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
