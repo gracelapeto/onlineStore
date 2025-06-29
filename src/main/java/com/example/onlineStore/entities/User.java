@@ -11,7 +11,6 @@ public class User {
     private Long id;
     private String username;
     private String password;
-    private String city;
     private String address;
     private String avatarUrl;
     private Boolean active;
