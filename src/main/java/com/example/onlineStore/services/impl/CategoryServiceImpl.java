@@ -20,7 +20,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     public Category createCategory(Category category) {
-        if (categoryRepository.findByName(category.getName()).isPresent()) {
+        if (categoryRepository.findByNameIgnoreCase(category.getName()).isPresent()) {
             throw new IllegalArgumentException("Category already exists with name: " + category.getName());
         }
         return categoryRepository.save(category);
@@ -48,8 +48,8 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findAll();
     }
 
-    public Optional<Object> findByName(String name) {
-        return categoryRepository.findByName(name);
+    public Category findByName(String name) {
+        return categoryRepository.findByNameIgnoreCase(name).orElseThrow();
     }
 
     @Override
