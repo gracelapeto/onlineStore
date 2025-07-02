@@ -2,7 +2,6 @@ package com.example.onlineStore.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.aspectj.weaver.ast.Var;
 
 @Entity
 @Data
@@ -12,11 +11,14 @@ public class User {
     private Long id;
     private String username;
     private String password;
-    private String city;
     private String address;
     private String avatarUrl;
-@ManyToOne
+    private Boolean active;
+    @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @OneToOne(mappedBy = "user")
+    private Bucket bucket;
 
 }
