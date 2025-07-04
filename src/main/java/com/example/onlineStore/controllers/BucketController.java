@@ -1,5 +1,6 @@
 package com.example.onlineStore.controllers;
 
+import com.example.onlineStore.dtos.AddProductBucketDto;
 import com.example.onlineStore.dtos.BucketResponseDto;
 import com.example.onlineStore.dtos.mapper.BucketMapper;
 import com.example.onlineStore.entities.Bucket;
@@ -35,10 +36,8 @@ public class BucketController {
 
     //to be seen
     @PostMapping("/addProduct")
-    public ResponseEntity<BucketResponseDto> addProduct(@RequestBody User user,@RequestBody Product product,int quantity
-    ) {
-        bucketService.addProductToBucket(user,product,quantity);
-        Bucket bucket = user.getBucket();
+    public ResponseEntity<BucketResponseDto> addProductToBucket(@RequestBody AddProductBucketDto dto) {
+        Bucket bucket = bucketService.addProductToBucket(dto.getUserId(), dto.getProductId(), dto.getQuantity());
         return ResponseEntity.ok(BucketMapper.entityToDto(bucket));
     }
 

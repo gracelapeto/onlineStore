@@ -28,12 +28,12 @@ public class BucketServiceImp implements BucketService {
     }
 
     @Override
-    public Bucket createBucketForUser(Long  userid) {
-        User user = userRepository......
+    public Bucket createBucketForUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         Bucket bucket = new Bucket();
         bucket.setUser(user);
-        bucketRepository.save(bucket);
-        return bucket;
+        return bucketRepository.save(bucket);
     }
 
     @Override
@@ -114,7 +114,7 @@ public class BucketServiceImp implements BucketService {
         List<BucketItem> items = bucket.getItems();
         Double totalPrice = 0.0;
         for (BucketItem item : items) {
-            totalPrice += item.getProduct().getPrice();
+            totalPrice += item.getProduct().getPrice() * item.getQuantity();
         }
         return totalPrice;
     }

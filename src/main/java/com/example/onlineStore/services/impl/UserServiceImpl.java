@@ -1,10 +1,11 @@
 package com.example.onlineStore.services.impl;
 
+import com.example.onlineStore.dtos.UserDto;
+import com.example.onlineStore.entities.Role;
 import com.example.onlineStore.entities.User;
 import com.example.onlineStore.repositories.RoleRepository;
 import com.example.onlineStore.repositories.UserRepository;
 import com.example.onlineStore.services.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,12 +24,6 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User save(User user) {
-        User savedUser = userRepository.save(user);
-         return savedUser;
-    }
-
-    @Override
     public List<User> findAll() {
         return userRepository.findAll();
     }
@@ -40,10 +35,22 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void activateUser(Long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() ->
-                        new EntityNotFoundException("User not found with id: " + id));
-        user.setActive(true);
-        userRepository.save(user);
-}}
+    public User registerUser(UserDto dto) {
+        if (userRepository.existsByUsername(dto.getUsername())) {
+            return null;
+        } else {
+            Role userRole = roleRepository.findById("ROLE_USER").get();
+
+            User newUser = new User();
+            newUser.setUsername(dto.getUsername());
+            newUser.setPassword(passwordEncoder.encode(dto.getPassword()));
+            newUser.setAddress(dto.getAddress());
+            newUser.setAvatarUrl(dto.getAvatarUrl());
+            newUser.setActive(true);
+            newUser.setRole(userRole);
+
+            return userRepository.save(newUser);
+        }
+    }
+
+}

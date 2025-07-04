@@ -11,9 +11,13 @@ public interface BucketService {
 
     Bucket createBucketForUser(User user);
 
+    Bucket createBucketForUser(Long userId);
+
     public void addProductToBucket(User user, Product product, int quantity);
 
     public void removeProductFromBucket(User user, BucketItem bucketItem);
+
+    void removeProductFromBucket(Long userId, Long productId);
 
     public void updateProductQuantity(User user, BucketItem bucketItem, int newQuantity);
 
