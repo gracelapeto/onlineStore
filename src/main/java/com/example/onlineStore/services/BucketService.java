@@ -9,13 +9,10 @@ import java.util.List;
 
 public interface BucketService {
 
-    Bucket createBucketForUser(User user);
-
     Bucket createBucketForUser(Long userId);
 
     public void addProductToBucket(User user, Product product, int quantity);
 
-    public void removeProductFromBucket(User user, BucketItem bucketItem);
 
     void removeProductFromBucket(Long userId, Long productId);
 
@@ -26,6 +23,8 @@ public interface BucketService {
     public void clearBucket(User user);
 
     public Double getTotalPrice(User user);
+
+
 
 
 
