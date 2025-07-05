@@ -11,29 +11,19 @@ import com.example.onlineStore.repositories.ProductRepository;
 import com.example.onlineStore.repositories.UserRepository;
 import com.example.onlineStore.services.BucketService;
 import com.example.onlineStore.services.impl.BucketServiceImp;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/buckets")
-
+@RequiredArgsConstructor
 public class BucketController {
 
     private final BucketService bucketService;
-    private final BucketMapper bucketMapper;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
-
-    @Autowired
-    public BucketController(BucketServiceImp bucketService, BucketMapper bucketMapper,
-                            UserRepository userRepository, ProductRepository productRepository) {
-        this.bucketService = bucketService;
-        this.bucketMapper = bucketMapper;
-        this.userRepository = userRepository;
-        this.productRepository = productRepository;
-
-    }
 
     @PostMapping("/createBucketByUser")
     public ResponseEntity<BucketResponseDto> createBucket(@RequestBody User user) {
@@ -55,6 +45,11 @@ public class BucketController {
         bucketService.addProductToBucket(user, product, dto.getQuantity());
 
         return ResponseEntity.ok("Product added to bucket successfully.");
+    }
+
+    @GetMapping("/get")
+    public ResponseEntity<BucketResponseDto> getBucket() {
+        return ResponseEntity.ok(bucketService.getByUser());
     }
 }
 

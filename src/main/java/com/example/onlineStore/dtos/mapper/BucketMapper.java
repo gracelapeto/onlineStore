@@ -5,13 +5,12 @@ import com.example.onlineStore.dtos.BucketResponseDto;
 import com.example.onlineStore.entities.Bucket;
 import org.springframework.stereotype.Component;
 
-@Component
 public class BucketMapper {
 
     public static BucketResponseDto entityToDto(Bucket bucket) {
         BucketResponseDto dto = new BucketResponseDto();
         dto.setItems(bucket.getItems());
-        dto.setUser(bucket.getUser());
+        dto.setId(bucket.getId());
         return dto;
     }
 

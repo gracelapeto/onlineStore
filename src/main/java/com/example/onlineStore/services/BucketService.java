@@ -1,9 +1,11 @@
 package com.example.onlineStore.services;
 
+import com.example.onlineStore.dtos.BucketResponseDto;
 import com.example.onlineStore.entities.Bucket;
 import com.example.onlineStore.entities.Product;
 import com.example.onlineStore.entities.User;
 import com.example.onlineStore.entities.BucketItem;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -25,15 +27,5 @@ public interface BucketService {
     public Double getTotalPrice(User user);
 
 
-
-
-
-
-
-
-
-
-
-
-
+    BucketResponseDto getByUser();
 }
