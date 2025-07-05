@@ -2,6 +2,7 @@ package com.example.onlineStore.services.impl;
 
 import com.example.onlineStore.entities.Category;
 import com.example.onlineStore.repositories.CategoryRepository;
+import com.example.onlineStore.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CategoryServiceImpl {
+public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
 
@@ -18,13 +19,15 @@ public class CategoryServiceImpl {
         this.categoryRepository = categoryRepository;
     }
 
+    @Override
     public Category createCategory(Category category) {
-        if (categoryRepository.findByName(category.getName()).isPresent()) {
+        if (categoryRepository.findByNameIgnoreCase(category.getName()).isPresent()) {
             throw new IllegalArgumentException("Category already exists with name: " + category.getName());
         }
         return categoryRepository.save(category);
     }
 
+    @Override
     public Category updateCategory(Long id, Category categoryDetails) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Category not found with id: " + id));
@@ -32,22 +35,16 @@ public class CategoryServiceImpl {
         return categoryRepository.save(category);
     }
 
-    public void deleteCategory(Long id) {
-        if (!categoryRepository.existsById(id)) {
-            throw new IllegalArgumentException("Category not found with id: " + id);
-        }
-        categoryRepository.deleteById(id);
+
+    public Category findById(Long id) {
+        return categoryRepository.findById(id).orElseThrow();
     }
 
-    public Optional<Category> findCategoryById(Long id) {
-        return categoryRepository.findById(id);
-    }
-
-    public List<Category> findAllCategories() {
+    public List<Category> findAll() {
         return categoryRepository.findAll();
     }
 
-    public Optional<Object> findCategoryByName(String name) {
-        return categoryRepository.findByName(name);
+    public Category findByName(String name) {
+        return categoryRepository.findByNameIgnoreCase(name).orElseThrow();
     }
 }
