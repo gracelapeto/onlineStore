@@ -1,33 +1,56 @@
 package com.example.onlineStore.services.impl;
 
+import com.example.onlineStore.dtos.UserDto;
+import com.example.onlineStore.entities.Role;
 import com.example.onlineStore.entities.User;
+import com.example.onlineStore.repositories.RoleRepository;
 import com.example.onlineStore.repositories.UserRepository;
 import com.example.onlineStore.services.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
-@Autowired
-public UserServiceImpl(UserRepository userRepository) {
-    this.userRepository = userRepository;
-}
 
-@Override
-public User save(User user){
-    return userRepository.save(user);
-}
-@Override
-public List<User> findAll(){
-    return userRepository.findAll();
-}
-@Override
-public Optional<User> findById(Long id){
-    return userRepository.findById(id);
-}
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
+
+    @Override
+    public User registerUser(UserDto dto) {
+        if (userRepository.existsByUsername(dto.getUsername())) {
+            return null;
+        } else {
+            Role userRole = roleRepository.findById("ROLE_USER").get();
+
+            User newUser = new User();
+            newUser.setUsername(dto.getUsername());
+            newUser.setPassword(passwordEncoder.encode(dto.getPassword()));
+            newUser.setAddress(dto.getAddress());
+            newUser.setAvatarUrl(dto.getAvatarUrl());
+            newUser.setActive(true);
+            newUser.setRole(userRole);
+
+            return userRepository.save(newUser);
+        }
+    }
+
 }
