@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 public class OnlineStoreException extends RuntimeException {
 
 
-    private OnlineStoreException(String message) {
+  public OnlineStoreException(String message) {
         super(message);
     }
 
