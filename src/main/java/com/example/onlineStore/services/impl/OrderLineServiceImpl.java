@@ -37,8 +37,6 @@ public class OrderLineServiceImpl implements OrderLineService {
         orderLine.setProduct(product);
         orderLine.setQuantity(quantity);
         return orderLineRepository.save(orderLine);
-
-
     }
 
     @Override
@@ -48,12 +46,7 @@ public class OrderLineServiceImpl implements OrderLineService {
 
     @Override
     public List<OrderLine> findByOrderId(Long orderId) {
-        return orderLineRepository.findByOrderId(orderId);
-    }
-    public String getProductNameById(Long id) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
-        return product.getTitle();
+        return orderLineRepository.findByOrder_Id(orderId);
     }
 
 }
