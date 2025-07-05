@@ -29,6 +29,7 @@ public class BucketServiceImp implements BucketService {
 
     @Override
     public Bucket createBucketForUser(Long userId) {
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         Bucket bucket = new Bucket();
@@ -104,10 +105,16 @@ public class BucketServiceImp implements BucketService {
 
     @Override
     public void clearBucket(User user) {
+        if (user == null) {
+            throw new RuntimeException("User is null");
+        }
         Bucket bucket = user.getBucket();
+        if (bucket == null) {
+            throw new RuntimeException("Bucket not found for user: " + user.getId());
+        }
         bucket.getItems().clear();
+        bucketRepository.save(bucket);
     }
-
     @Override
     public Double getTotalPrice(User user) {
         Bucket bucket = user.getBucket();
