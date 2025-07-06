@@ -49,4 +49,7 @@ public class OnlineStoreException extends RuntimeException {
     public static OnlineStoreException userAlreadyExists(String username) {
         return new OnlineStoreException("User with username '" + username + "' already exists");
     }
+    public static OnlineStoreException authorAlreadyExists(String username) {
+        return new OnlineStoreException("User with username '" + username + "' already exists");
+    }
 }

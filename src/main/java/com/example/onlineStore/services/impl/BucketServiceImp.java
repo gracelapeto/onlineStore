@@ -11,6 +11,7 @@ import com.example.onlineStore.repositories.UserRepository;
 import com.example.onlineStore.services.BucketService;
 import com.example.onlineStore.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.onlineStore.exception.OnlineStoreException;
@@ -111,12 +112,13 @@ public class BucketServiceImp implements BucketService {
 
     @Override
     public void clearBucket(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> OnlineStoreException.notFound(User.class, userId.toString()));
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found: " + username));
         Bucket bucket = user.getBucket();
         if (bucket == null) {
-            throw new RuntimeException("Bucket not found for user: " + user.getId());
+            throw new RuntimeException("Bucket not found for user: " + username);
         }
         bucket.getItems().clear();
         bucketRepository.save(bucket);
