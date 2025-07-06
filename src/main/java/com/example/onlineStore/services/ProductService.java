@@ -1,5 +1,6 @@
 package com.example.onlineStore.services;
 
+import com.example.onlineStore.dtos.ProductCreateDto;
 import com.example.onlineStore.entities.Product;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface ProductService {
     List<Product> findProductByTitle(String title);
 
     List<Product> findProductByCategory();
+
+    Product createProduct(ProductCreateDto dto);
 }

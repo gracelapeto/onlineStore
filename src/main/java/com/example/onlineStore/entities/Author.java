@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table (name = "author")
+@Table (name = "authors")
 
 public class Author {
     @Id
@@ -14,9 +14,5 @@ public class Author {
     private String firstname;
     private String lastname;
 
-    public static void setFirstName(String firstname) {
-    }
 
-    public static void setLastName(String lastname) {
-    }
 }

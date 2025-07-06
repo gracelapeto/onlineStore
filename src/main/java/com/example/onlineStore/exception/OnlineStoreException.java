@@ -1,10 +1,5 @@
 package com.example.onlineStore.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
-@AllArgsConstructor
 public class OnlineStoreException extends RuntimeException {
 
 

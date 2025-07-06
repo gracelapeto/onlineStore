@@ -1,6 +1,7 @@
 package com.example.onlineStore.services.impl;
 
 import com.example.onlineStore.entities.Author;
+import com.example.onlineStore.entities.Product;
 import com.example.onlineStore.exception.OnlineStoreException;
 import com.example.onlineStore.repositories.AuthorRepository;
 import com.example.onlineStore.services.AuthorService;
@@ -16,37 +17,35 @@ public class AuthorServiceImpl implements AuthorService {
     private AuthorRepository authorRepository;
 
     @Autowired
-    public AuthorServiceImpl (AuthorRepository authorRepository){
-        this.authorRepository=authorRepository;
+    public AuthorServiceImpl(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
     }
+
     @Override
     public Author createAuthor(Author author) {
-        if (authorRepository.findByFirstName(author.getFirstname()).isPresent()) {
-            throw OnlineStoreException.authorAlreadyExists(author.getFirstname());
-        }
         return authorRepository.save(author);
     }
-@Override
-public Author updateAuthor(Long id, Author authorDetails) {
+    @Override
+    public Author updateAuthor(Long id, Author authorDetails) {
         Author author = authorRepository.findById(id)
-                .orElseThrow(() ->  OnlineStoreException.notFound(Author.class, id.toString()));
-        author.setFirstName(authorDetails.getFirstname());
-        author.setLastName(authorDetails.getLastname());
+                .orElseThrow(() -> OnlineStoreException.notFound(Author.class, id.toString()));
+        author.setFirstname (authorDetails.getFirstname());
+        author.setLastname (authorDetails.getLastname());
         return authorRepository.save(author);
-        }
-
-@Override
-public Optional<Author> findAuthorById(Long id) {
-
-        return authorRepository.findById(id);
     }
-@Override
-public List<Author> findAllAuthors() {
 
+    @Override
+    public Author findAuthorById(Long id) {
+        return authorRepository.findById(id).orElseThrow();
+    }
+
+    @Override
+    public List<Author> findAllAuthors() {
         return authorRepository.findAll();
     }
-@Override
-public Optional<Object> findAuthorByName(String name) {
+
+    @Override
+    public Optional<Object> findAuthorByName(String name) {
         return authorRepository.findByName(name);
     }
 }
