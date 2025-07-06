@@ -1,13 +1,11 @@
 package com.example.onlineStore.controllers;
 
 import com.example.onlineStore.entities.Author;
-import com.example.onlineStore.entities.Product;
 import com.example.onlineStore.services.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/authors")
