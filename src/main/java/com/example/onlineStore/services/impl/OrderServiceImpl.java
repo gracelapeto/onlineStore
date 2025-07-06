@@ -1,11 +1,16 @@
 package com.example.onlineStore.services.impl;
 
 import com.example.onlineStore.dtos.OrderCreateDto;
+import com.example.onlineStore.entities.Bucket;
 import com.example.onlineStore.entities.Order;
 import com.example.onlineStore.entities.OrderLine;
+import com.example.onlineStore.entities.User;
+import com.example.onlineStore.enums.OrderStatus;
+import com.example.onlineStore.exception.OnlineStoreException;
 import com.example.onlineStore.repositories.OrderLineRepository;
 import com.example.onlineStore.repositories.OrderRepository;
 import com.example.onlineStore.services.OrderService;
+import com.example.onlineStore.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +26,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
     @Autowired
     private OrderLineRepository orderLineRepository;
+    @Autowired
+    private UserService userService;
 
     @Override
     public Order create(OrderCreateDto dto){
@@ -50,10 +57,32 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> findAll(){
         return orderRepository.findAll();
     }
-
-
-
+    @Override
+    public Order findById(Long id){
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new OnlineStoreException("Order not found"));
     }
+    @Override
+    public void delete(Long id){
+        orderRepository.deleteById(id);
+    }
+
+
+    private Order createOrder(Bucket bucket){
+        Order order = new Order();
+        order.setOrderDate(LocalDateTime.now());
+        order.setOrderStatus(OrderStatus.NEW);
+        return order;
+    }
+    @Override
+    public List<Order> getOrdersByStatusForCurrentUser(String status) {
+        User user = userService.getLoggedUser();
+        OrderStatus orderStatus = OrderStatus.valueOf(status.toUpperCase());
+        return orderRepository.findByUserAndOrderStatus(user, orderStatus);
+    }
+    }
+
+
 
 
 

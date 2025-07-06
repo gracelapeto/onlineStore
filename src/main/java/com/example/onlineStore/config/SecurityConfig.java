@@ -35,6 +35,7 @@ public class SecurityConfig {
             roleRepository.save(new Role("ROLE_ADMIN"));
         if (!roleRepository.existsById("ROLE_USER"))
             roleRepository.save(new Role("ROLE_USER"));
+
     }
 
     @Bean
