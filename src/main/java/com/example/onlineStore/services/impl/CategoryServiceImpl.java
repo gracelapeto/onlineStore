@@ -1,6 +1,7 @@
 package com.example.onlineStore.services.impl;
 
 import com.example.onlineStore.entities.Category;
+import com.example.onlineStore.exception.OnlineStoreException;
 import com.example.onlineStore.repositories.CategoryRepository;
 import com.example.onlineStore.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category createCategory(Category category) {
         if (categoryRepository.findByNameIgnoreCase(category.getName()).isPresent()) {
-            throw new IllegalArgumentException("Category already exists with name: " + category.getName());
+            throw new OnlineStoreException("Category already exists");
         }
         return categoryRepository.save(category);
     }
@@ -39,7 +40,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category findById(Long id) {
         return categoryRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Category not found with id: " + id));
+                .orElseThrow(() -> OnlineStoreException.categoryNotFound(id));
     }
 
     @Override
