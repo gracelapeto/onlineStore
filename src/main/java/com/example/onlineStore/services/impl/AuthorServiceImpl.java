@@ -19,6 +19,7 @@ public class AuthorServiceImpl implements AuthorService {
     public AuthorServiceImpl (AuthorRepository authorRepository){
         this.authorRepository=authorRepository;
     }
+
     @Override
     public Author createAuthor(Author author) {
         if (authorRepository.findByFirstName(author.getFirstname()).isPresent()) {
@@ -26,15 +27,16 @@ public class AuthorServiceImpl implements AuthorService {
         }
         return authorRepository.save(author);
     }
-@Override
-public Author updateAuthor(Long id, Author authorDetails) {
-        Author author = authorRepository.findById(id)
-                .orElseThrow(() ->  OnlineStoreException.notFound(Author.class, id.toString()));
-        author.set(authorDetails.getFirstname());
-        author.setLastName(authorDetails.getLastname());
-        return authorRepository.save(author);
-        }
 
+@Override
+public Optional<Author> updateAuthor(Long id, Author authorDetails) {
+    Author author = authorRepository.findById(id)
+            .orElseThrow(() -> OnlineStoreException.notFound(Author.class, id.toString()));
+    author setFirstName (authorDetails.getFirstname());
+    author setLastName (authorDetails.getLastname());
+    return authorRepository.save(author);
+
+}
 @Override
 public Optional<Author> findAuthorById(Long id) {
 
@@ -45,6 +47,7 @@ public List<Author> findAllAuthors() {
 
         return authorRepository.findAll();
     }
+
 @Override
 public Optional<Object> findAuthorByName(String name) {
         return authorRepository.findByName(name);

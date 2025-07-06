@@ -13,10 +13,4 @@ public class Author {
     private Long id;
     private String firstname;
     private String lastname;
-
-    public static void setFirstName(String firstname) {
-    }
-
-    public static void setLastName (String lastname) {
-    }
 }
