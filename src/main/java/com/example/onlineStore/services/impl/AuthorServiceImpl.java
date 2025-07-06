@@ -30,7 +30,7 @@ public class AuthorServiceImpl implements AuthorService {
 public Author updateAuthor(Long id, Author authorDetails) {
         Author author = authorRepository.findById(id)
                 .orElseThrow(() ->  OnlineStoreException.notFound(Author.class, id.toString()));
-        author.setFirstName(authorDetails.getFirstname());
+        author.set(authorDetails.getFirstname());
         author.setLastName(authorDetails.getLastname());
         return authorRepository.save(author);
         }

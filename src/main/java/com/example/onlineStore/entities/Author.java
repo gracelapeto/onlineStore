@@ -17,6 +17,6 @@ public class Author {
     public static void setFirstName(String firstname) {
     }
 
-    public static void setLastName(String lastname) {
+    public static void setLastName (String lastname) {
     }
 }
