@@ -17,4 +17,6 @@ public interface ProductService {
     List<Product> findProductByCategory();
 
     Product createProduct(ProductCreateDto dto);
+
+    List<Product>getAllByAuthor(Long authorId);
 }

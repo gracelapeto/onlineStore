@@ -64,5 +64,11 @@ public class ProductServiceImpl implements ProductService {
     public List<Product>findProductByCategory(){
         return productRepository.findProductByCategory();
     }
+
+    @Override
+    public List<Product>getAllByAuthor(Long authorId){
+        return productRepository.getAllByAuthor_Id((authorId));
+
+    }
 }
 

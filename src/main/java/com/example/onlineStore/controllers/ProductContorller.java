@@ -3,6 +3,7 @@ package com.example.onlineStore.controllers;
 import com.example.onlineStore.dtos.ProductCreateDto;
 import com.example.onlineStore.entities.Category;
 import com.example.onlineStore.entities.Product;
+import com.example.onlineStore.services.AuthorService;
 import com.example.onlineStore.services.CategoryService;
 import com.example.onlineStore.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,11 @@ import java.util.List;
 public class ProductContorller {
 
     private final ProductService productService;
+    private final AuthorService authorService;
 
-    public ProductContorller(ProductService productService) {
+    public ProductContorller(ProductService productService, AuthorService authorService) {
         this.productService = productService;
+        this.authorService = authorService;
     }
 
     @PostMapping
@@ -52,6 +55,10 @@ public class ProductContorller {
     @GetMapping("/by-category")
     public ResponseEntity<List<Product>> findByCategory() {
         return ResponseEntity.ok(productService.findProductByCategory());
+    }
+    @GetMapping("products")
+    public List<Product> getProductsByAuthor(@PathVariable Long id) {
+        return authorService.getAllByAuthor(id);
     }
 }
 
