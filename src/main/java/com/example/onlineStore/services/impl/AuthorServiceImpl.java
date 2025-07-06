@@ -45,8 +45,9 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Optional<Object> findAuthorByName(String name) {
-        return authorRepository.findByName(name);
+    public List<Author> findAuthorByName(String name) {
+        String search = "%".concat(name).concat("%");
+        return authorRepository.findByName(search);
     }
 
     @Override

@@ -53,8 +53,8 @@ public class ProductContorller {
     }
 
     @GetMapping("/by-category")
-    public ResponseEntity<List<Product>> findByCategory() {
-        return ResponseEntity.ok(productService.findProductByCategory());
+    public ResponseEntity<List<Product>> findByCategory(@RequestParam Long categoryId) {
+        return ResponseEntity.ok(productService.findProductByCategory(categoryId));
     }
     @GetMapping("products")
     public List<Product> getProductsByAuthor(@PathVariable Long id) {

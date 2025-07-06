@@ -14,7 +14,7 @@ public interface ProductService {
 
     List<Product> findProductByTitle(String title);
 
-    List<Product> findProductByCategory();
+    List<Product> findProductByCategory(Long categoryId);
 
     Product createProduct(ProductCreateDto dto);
 
