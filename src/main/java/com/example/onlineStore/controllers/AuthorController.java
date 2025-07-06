@@ -3,11 +3,11 @@ package com.example.onlineStore.controllers;
 import com.example.onlineStore.entities.Author;
 import com.example.onlineStore.entities.Product;
 import com.example.onlineStore.services.AuthorService;
-import com.example.onlineStore.services.impl.AuthorServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/authors")
@@ -27,14 +27,14 @@ import java.util.List;
             return authorService.createAuthor(author);
         }
         @PutMapping("/{id}")
-        public Author updateAuthor(@PathVariable Long id, @RequestBody Author authorDetails) {
+        public Optional<Author> updateAuthor(@PathVariable Long id, @RequestBody Author authorDetails) {
             return authorService.updateAuthor(id, authorDetails);
         }
         @DeleteMapping("/{id}")
         public void deleteAuthor(@PathVariable Long id) {
             authorService.deleteAuthor(id);
         }
-        // Opsionale: Merr të gjitha produktet e këtij autori
+
         @GetMapping("/{id}/products")
         public List<Product> getProductsByAuthor(@PathVariable Long id) {
             return authorService.getProductsByAuthor(id);

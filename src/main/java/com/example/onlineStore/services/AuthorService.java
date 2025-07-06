@@ -10,7 +10,7 @@ public interface AuthorService {
 
     Author createAuthor(Author author);
 
-    Author updateAuthor(Long id, Author authorDetails);
+    Optional<Author> updateAuthor(Long id, Author authorDetails);
 
     Optional<Author> findAuthorById(Long id);
 
