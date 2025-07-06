@@ -17,4 +17,6 @@ public interface AuthorService {
     List<Author> findAllAuthors();
 
     Optional<Object> findAuthorByName(String name);
+
+    List<Product> getAllByAuthor(Long id);
 }

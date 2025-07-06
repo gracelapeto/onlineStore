@@ -2,6 +2,10 @@ package com.example.onlineStore.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.apache.catalina.LifecycleState;
+import org.aspectj.weaver.ast.Literal;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -13,6 +17,6 @@ public class Author {
     private Long id;
     private String firstname;
     private String lastname;
-
-
+@OneToMany
+    private List< Product> products;
 }
