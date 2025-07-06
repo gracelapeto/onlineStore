@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order findById(Long id){
         return orderRepository.findById(id)
-                .orElseThrow(() -> new OnlineStoreException("Order not found"));
+                .orElseThrow(() ->  OnlineStoreException.notFound(Order.class,id.toString()));
     }
     @Override
     public void delete(Long id){
