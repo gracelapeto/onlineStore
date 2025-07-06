@@ -30,17 +30,16 @@ public class OrderController {
     public ResponseEntity<Order> findOrderById(@PathVariable Long id) {
         return ResponseEntity.ok(orderService.findById(id));
     }
-    @GetMapping("/my")
+    @GetMapping("/status")
     public ResponseEntity<List<Order>> findOrdersByStatus(@RequestParam String status) {
         List<Order> orders = orderService.getOrdersByStatusForCurrentUser(status);
         return ResponseEntity.ok(orders);
     }
-
-
-
-
-
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
+        orderService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }
 
