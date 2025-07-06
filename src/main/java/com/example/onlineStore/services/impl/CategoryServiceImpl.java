@@ -1,5 +1,4 @@
 package com.example.onlineStore.services.impl;
-
 import com.example.onlineStore.entities.Category;
 import com.example.onlineStore.exception.OnlineStoreException;
 import com.example.onlineStore.repositories.CategoryRepository;
@@ -24,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category createCategory(Category category) {
         if (categoryRepository.findByNameIgnoreCase(category.getName()).isPresent()) {
-            throw new OnlineStoreException("Category already exists");
+            throw OnlineStoreException.categoryNotFound(category.getId());
         }
         return categoryRepository.save(category);
     }
