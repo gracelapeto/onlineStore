@@ -35,7 +35,7 @@ public class OrderController {
         List<Order> orders = orderService.getOrdersByStatusForCurrentUser(status);
         return ResponseEntity.ok(orders);
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{delete}")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
         orderService.delete(id);
         return ResponseEntity.noContent().build();
