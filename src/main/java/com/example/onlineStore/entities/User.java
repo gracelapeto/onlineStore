@@ -13,6 +13,7 @@ public class User {
     private String password;
     private String address;
     private String avatarUrl;
+    private String email;
     private Boolean active;
     @ManyToOne
     @JoinColumn(name = "role_id")

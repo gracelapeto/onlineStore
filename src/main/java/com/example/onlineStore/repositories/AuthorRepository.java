@@ -10,3 +10,4 @@ public interface AuthorRepository extends JpaRepository<Author, Long>{
 
     Optional<Object> findByName(String name);
 }
+

@@ -12,6 +12,7 @@ import com.example.onlineStore.repositories.UserRepository;
 import com.example.onlineStore.services.BucketService;
 import com.example.onlineStore.services.impl.BucketServiceImp;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +33,6 @@ public class BucketController {
     }
 
 
-    //to be seen
-
     @PostMapping("/addProduct")
     public ResponseEntity<String> addProductToBucket(@RequestParam AddProductBucketDto dto) {
         User user = userRepository.findById(dto.getUserId())
@@ -50,6 +49,12 @@ public class BucketController {
     @GetMapping("/get")
     public ResponseEntity<BucketResponseDto> getBucket() {
         return ResponseEntity.ok(bucketService.getByUser());
+    }
+
+    @DeleteMapping("/clear/{userId}")
+    public ResponseEntity<String> clearUserBucket(@PathVariable Long userId) {
+        bucketService.clearBucket(userId);
+        return ResponseEntity.ok("Bucket cleared for user with ID: " + userId);
     }
 }
 

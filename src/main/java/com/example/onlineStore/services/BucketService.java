@@ -22,10 +22,12 @@ public interface BucketService {
 
     public List<BucketItem> getBucketItems(User user);
 
-    public void clearBucket(User user);
+    public void clearBucket(Long userId);
 
     public Double getTotalPrice(User user);
 
 
     BucketResponseDto getByUser();
+
+    void clearBucketOfLoggedInUser(String username);
 }

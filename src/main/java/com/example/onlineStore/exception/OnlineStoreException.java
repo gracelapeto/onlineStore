@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 public class OnlineStoreException extends RuntimeException {
 
 
-  public OnlineStoreException(String message) {
+ private OnlineStoreException(String message) {
         super(message);
     }
 
@@ -41,5 +41,15 @@ public class OnlineStoreException extends RuntimeException {
 
     public static OnlineStoreException orderFailed(String reason) {
         return new OnlineStoreException("Order failed: " + reason);
+    }
+    public static OnlineStoreException notFound(Class<?> clazz, String id) {
+        return new OnlineStoreException(clazz.getSimpleName() + " with id " + id + " not found");
+    }
+
+    public static OnlineStoreException userAlreadyExists(String username) {
+        return new OnlineStoreException("User with username '" + username + "' already exists");
+    }
+    public static OnlineStoreException authorAlreadyExists(String username) {
+        return new OnlineStoreException("User with username '" + username + "' already exists");
     }
 }
