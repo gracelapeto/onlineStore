@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface AuthorRepository extends JpaRepository<Author, Long>{
 
-    @Query("select a from Author a where concat(a.firstName, ' ', a.lastname) like :name")
+    @Query("select a from Author a where concat(a.firstname, ' ', a.lastname) like :name")
     List<Author> findByName(String name);
 }
 

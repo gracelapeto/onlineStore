@@ -8,6 +8,7 @@ import com.example.onlineStore.exception.OnlineStoreException;
 import com.example.onlineStore.repositories.RoleRepository;
 import com.example.onlineStore.repositories.UserRepository;
 import com.example.onlineStore.services.UserService;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -99,6 +100,25 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @PostConstruct
+    public void addRoles() {
+        if (!roleRepository.existsById("ROLE_ADMIN"))
+            roleRepository.save(new Role("ROLE_ADMIN"));
+        if (!roleRepository.existsById("ROLE_USER"))
+            roleRepository.save(new Role("ROLE_USER"));
+
+        if (!userRepository.existsByUsername("admin")) {
+            User admin = new User();
+            admin.setUsername("admin");
+            admin.setPassword(passwordEncoder.encode("admin123")); // fjalëkalimi i enkriptuar
+            admin.setEmail("admin@example.com");
+            admin.setActive(true);
+            Role adminRole = roleRepository.findById("ROLE_ADMIN").orElseThrow();
+            admin.setRole(adminRole);
+            userRepository.save(admin);
+        }
+
+    }
 
     @Override
     public User getLoggedUser() {

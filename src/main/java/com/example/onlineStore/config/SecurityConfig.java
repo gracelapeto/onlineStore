@@ -1,11 +1,6 @@
 package com.example.onlineStore.config;
 
-import com.example.onlineStore.entities.Role;
-import com.example.onlineStore.entities.User;
-import com.example.onlineStore.repositories.RoleRepository;
-import com.example.onlineStore.repositories.UserRepository;
 import com.example.onlineStore.security.UserDetailsServicesImpl;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,42 +13,19 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import java.util.List;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Autowired
-    private RoleRepository roleRepository;
+
     @Autowired
     private UserDetailsServicesImpl userDetailsService;
-    @Autowired
-    private UserRepository userRepository;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @PostConstruct
-    public void addRoles() {
-        if (!roleRepository.existsById("ROLE_ADMIN"))
-            roleRepository.save(new Role("ROLE_ADMIN"));
-        if (!roleRepository.existsById("ROLE_USER"))
-            roleRepository.save(new Role("ROLE_USER"));
 
-        if (!userRepository.existsByUsername("admin")) {
-            User admin = new User();
-            admin.setUsername("admin");
-            admin.setPassword(passwordEncoder().encode("admin123")); // fjalëkalimi i enkriptuar
-            admin.setEmail("admin@example.com");
-            admin.setActive(true);
-            Role adminRole = roleRepository.findById("ROLE_ADMIN").orElseThrow();
-            admin.setRole(adminRole);
-            userRepository.save(admin);
-        }
-
-    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
