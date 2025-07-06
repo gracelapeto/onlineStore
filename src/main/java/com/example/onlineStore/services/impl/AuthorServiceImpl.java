@@ -48,5 +48,10 @@ public class AuthorServiceImpl implements AuthorService {
     public Optional<Object> findAuthorByName(String name) {
         return authorRepository.findByName(name);
     }
+
+    @Override
+    public List<Product> getAllByAuthor(Long id) {
+        return List.of();
+    }
 }
 
