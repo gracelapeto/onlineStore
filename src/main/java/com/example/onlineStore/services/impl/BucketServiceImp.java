@@ -11,9 +11,9 @@ import com.example.onlineStore.repositories.UserRepository;
 import com.example.onlineStore.services.BucketService;
 import com.example.onlineStore.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.example.onlineStore.exception.OnlineStoreException;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,11 +24,15 @@ public class BucketServiceImp implements BucketService {
 
     private final BucketRepository bucketRepository;
     private final UserService userService;
+    private final UserRepository userRepository;
+
+
 
     @Autowired
-    public BucketServiceImp(BucketRepository bucketRepository, UserRepository userRepository, UserService userService) {
+    public BucketServiceImp(BucketRepository bucketRepository, UserRepository userRepository, UserService userService, UserRepository userRepository1) {
         this.bucketRepository = bucketRepository;
         this.userService = userService;
+        this.userRepository = userRepository1;
     }
 
     @Override
@@ -106,10 +110,10 @@ public class BucketServiceImp implements BucketService {
     }
 
     @Override
-    public void clearBucket(User user) {
-        if (user == null) {
-            throw new RuntimeException("User is null");
-        }
+    public void clearBucket(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> OnlineStoreException.notFound(User.class, userId.toString()));
+
         Bucket bucket = user.getBucket();
         if (bucket == null) {
             throw new RuntimeException("Bucket not found for user: " + user.getId());
@@ -117,6 +121,7 @@ public class BucketServiceImp implements BucketService {
         bucket.getItems().clear();
         bucketRepository.save(bucket);
     }
+
     @Override
     public Double getTotalPrice(User user) {
         Bucket bucket = user.getBucket();
@@ -132,6 +137,17 @@ public class BucketServiceImp implements BucketService {
     public BucketResponseDto getByUser() {
        return BucketMapper.entityToDto(userService.getLoggedUser().getBucket());
 
+    }
+    @Override
+    public void clearBucketOfLoggedInUser(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> OnlineStoreException.notFound(User.class, username));
+
+        Bucket bucket = user.getBucket();
+        if (bucket != null) {
+            bucket.getItems().clear();
+            bucketRepository.save(bucket);
+        }
     }
 
 }

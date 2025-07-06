@@ -3,10 +3,9 @@ package com.example.onlineStore.dtos;
 import lombok.Data;
 
 @Data
-public class UserDto {
-    private String username;
-    private String password;
+public class UpdateUserProfileDto {
+    private Long userId;
     private String address;
-    private String email;
     private String avatarUrl;
 }
+

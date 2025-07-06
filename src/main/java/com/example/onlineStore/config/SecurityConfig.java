@@ -1,7 +1,9 @@
 package com.example.onlineStore.config;
 
 import com.example.onlineStore.entities.Role;
+import com.example.onlineStore.entities.User;
 import com.example.onlineStore.repositories.RoleRepository;
+import com.example.onlineStore.repositories.UserRepository;
 import com.example.onlineStore.security.UserDetailsServicesImpl;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.core.Authentication;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -23,6 +28,8 @@ public class SecurityConfig {
     private RoleRepository roleRepository;
     @Autowired
     private UserDetailsServicesImpl userDetailsService;
+    @Autowired
+    private UserRepository userRepository;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -35,6 +42,17 @@ public class SecurityConfig {
             roleRepository.save(new Role("ROLE_ADMIN"));
         if (!roleRepository.existsById("ROLE_USER"))
             roleRepository.save(new Role("ROLE_USER"));
+
+        if (!userRepository.existsByUsername("admin")) {
+            User admin = new User();
+            admin.setUsername("admin");
+            admin.setPassword(passwordEncoder().encode("admin123")); // fjalëkalimi i enkriptuar
+            admin.setEmail("admin@example.com");
+            admin.setActive(true);
+            Role adminRole = roleRepository.findById("ROLE_ADMIN").orElseThrow();
+            admin.setRole(adminRole);
+            userRepository.save(admin);
+        }
 
     }
 
