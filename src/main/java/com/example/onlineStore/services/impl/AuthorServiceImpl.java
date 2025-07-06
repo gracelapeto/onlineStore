@@ -1,6 +1,7 @@
 package com.example.onlineStore.services.impl;
 
 import com.example.onlineStore.entities.Author;
+import com.example.onlineStore.entities.Product;
 import com.example.onlineStore.exception.OnlineStoreException;
 import com.example.onlineStore.repositories.AuthorRepository;
 import com.example.onlineStore.services.AuthorService;
@@ -16,8 +17,8 @@ public class AuthorServiceImpl implements AuthorService {
     private AuthorRepository authorRepository;
 
     @Autowired
-    public AuthorServiceImpl (AuthorRepository authorRepository){
-        this.authorRepository=authorRepository;
+    public AuthorServiceImpl(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
     }
 
     @Override
@@ -28,28 +29,30 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository.save(author);
     }
 
-@Override
-public Optional<Author> updateAuthor(Long id, Author authorDetails) {
-    Author author = authorRepository.findById(id)
-            .orElseThrow(() -> OnlineStoreException.notFound(Author.class, id.toString()));
-    author setFirstName (authorDetails.getFirstname());
-    author setLastName (authorDetails.getLastname());
-    return authorRepository.save(author);
+    @Override
+    public Optional<Author> updateAuthor(Long id, Author authorDetails) {
+        Author author = authorRepository.findById(id)
+                .orElseThrow(() -> OnlineStoreException.notFound(Author.class, id.toString()));
+        author setFirstName (authorDetails.getFirstname());
+        author setLastName (authorDetails.getLastname());
+        return authorRepository.save(author);
 
-}
-@Override
-public Optional<Author> findAuthorById(Long id) {
+    }
+
+    @Override
+    public Optional<Author> findAuthorById(Long id) {
 
         return authorRepository.findById(id);
     }
-@Override
-public List<Author> findAllAuthors() {
+
+    @Override
+    public List<Author> findAllAuthors() {
 
         return authorRepository.findAll();
     }
 
-@Override
-public Optional<Object> findAuthorByName(String name) {
+    @Override
+    public Optional<Object> findAuthorByName(String name) {
         return authorRepository.findByName(name);
     }
 }
