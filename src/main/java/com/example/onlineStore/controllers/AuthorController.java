@@ -16,27 +16,18 @@ import java.util.Optional;
         private final AuthorService authorService;
         @GetMapping
         public List<Author> getAllAuthors() {
-            return authorService.getAllAuthor();
+            return authorService.findAllAuthors();
         }
         @GetMapping("/{id}")
         public Author getAuthorById(@PathVariable Long id) {
-            return authorService.getAuthorById(id);
+            return authorService.findAuthorById(id);
         }
         @PostMapping
         public Author createAuthor(@RequestBody Author author) {
             return authorService.createAuthor(author);
         }
         @PutMapping("/{id}")
-        public Optional<Author> updateAuthor(@PathVariable Long id, @RequestBody Author authorDetails) {
+        public Author updateAuthor(@PathVariable Long id, @RequestBody Author authorDetails) {
             return authorService.updateAuthor(id, authorDetails);
-        }
-        @DeleteMapping("/{id}")
-        public void deleteAuthor(@PathVariable Long id) {
-            authorService.deleteAuthor(id);
-        }
-
-        @GetMapping("/{id}/products")
-        public List<Product> getProductsByAuthor(@PathVariable Long id) {
-            return authorService.getProductsByAuthor(id);
         }
     }

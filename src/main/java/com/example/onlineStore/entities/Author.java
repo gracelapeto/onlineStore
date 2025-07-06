@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table (name = "author")
+@Table (name = "authors")
 
 public class Author {
     @Id
@@ -13,4 +13,6 @@ public class Author {
     private Long id;
     private String firstname;
     private String lastname;
+
+
 }

@@ -23,31 +23,24 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author createAuthor(Author author) {
-        if (authorRepository.findByFirstName(author.getFirstname()).isPresent()) {
-            throw OnlineStoreException.authorAlreadyExists(author.getFirstname());
-        }
         return authorRepository.save(author);
     }
-
     @Override
-    public Optional<Author> updateAuthor(Long id, Author authorDetails) {
+    public Author updateAuthor(Long id, Author authorDetails) {
         Author author = authorRepository.findById(id)
                 .orElseThrow(() -> OnlineStoreException.notFound(Author.class, id.toString()));
-        author setFirstName (authorDetails.getFirstname());
-        author setLastName (authorDetails.getLastname());
+        author.setFirstname (authorDetails.getFirstname());
+        author.setLastname (authorDetails.getLastname());
         return authorRepository.save(author);
-
     }
 
     @Override
-    public Optional<Author> findAuthorById(Long id) {
-
-        return authorRepository.findById(id);
+    public Author findAuthorById(Long id) {
+        return authorRepository.findById(id).orElseThrow();
     }
 
     @Override
     public List<Author> findAllAuthors() {
-
         return authorRepository.findAll();
     }
 

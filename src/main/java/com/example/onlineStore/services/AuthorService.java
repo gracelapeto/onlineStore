@@ -10,19 +10,11 @@ public interface AuthorService {
 
     Author createAuthor(Author author);
 
-    Optional<Author> updateAuthor(Long id, Author authorDetails);
+    Author updateAuthor(Long id, Author authorDetails);
 
-    Optional<Author> findAuthorById(Long id);
+    Author findAuthorById(Long id);
 
     List<Author> findAllAuthors();
 
     Optional<Object> findAuthorByName(String name);
-
-    List<Author> getAllAuthor();
-
-    Author getAuthorById(Long id);
-
-    void deleteAuthor(Long id);
-
-    List<Product> getProductsByAuthor(Long id);
 }
