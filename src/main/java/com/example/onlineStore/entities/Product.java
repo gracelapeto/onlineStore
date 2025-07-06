@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "tables")
+@Table(name = "products")
 
 public class Product {
     @Id
@@ -21,5 +21,4 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category")
     private Category category;
-
 }
