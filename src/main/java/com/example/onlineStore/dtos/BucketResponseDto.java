@@ -8,6 +8,6 @@ import lombok.Data;
 
 @Data
 public class BucketResponseDto {
-    private User user;
+    private Long id;
     private List<BucketItem> items = new ArrayList<>();
 }
