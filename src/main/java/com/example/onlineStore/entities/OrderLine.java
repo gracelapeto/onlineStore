@@ -1,12 +1,15 @@
 package com.example.onlineStore.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderLine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

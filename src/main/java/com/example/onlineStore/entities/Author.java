@@ -1,14 +1,17 @@
 package com.example.onlineStore.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.apache.catalina.LifecycleState;
 import org.aspectj.weaver.ast.Literal;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table (name = "authors")
 
 public class Author {
