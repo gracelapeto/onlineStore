@@ -14,9 +14,6 @@ public class Category {
     private Long id;
     @Column(unique = true)
     private String name;
-//    @ManyToOne
-//    @JoinColumn(name = "main category")
-//    private Category category;
 
 
 

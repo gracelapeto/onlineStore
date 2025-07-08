@@ -1,5 +1,6 @@
 package com.example.onlineStore.entities;
 
+import com.example.onlineStore.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,8 +19,8 @@ public class User {
     private String avatarUrl;
     private String email;
     private Boolean active;
-    @ManyToOne
-    @JoinColumn(name = "role_id")
+
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @OneToOne(mappedBy = "user")
