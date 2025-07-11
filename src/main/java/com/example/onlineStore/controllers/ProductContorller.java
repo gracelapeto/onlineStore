@@ -57,8 +57,8 @@ public class ProductContorller {
         return ResponseEntity.ok(productService.findProductByCategory(categoryId));
     }
     @GetMapping("products")
-    public List<Product> getProductsByAuthor(@PathVariable Long id) {
-        return authorService.getAllByAuthor(id);
+    public List<Product> getAllProductByAuthor(@PathVariable Long authorId) {
+        return authorService.getAllByAuthor(authorId);
     }
 }
 

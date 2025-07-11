@@ -39,7 +39,7 @@ public User findById(Long id) {
 @Override
 public User registerUser(UserDto dto) {
     if (userRepository.existsByUsername(dto.getUsername())) {
-        return null;
+        throw OnlineStoreException.userAlreadyExists(dto.getUsername());
     }
 
     User newUser = new User();

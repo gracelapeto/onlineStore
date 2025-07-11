@@ -67,8 +67,8 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.deleteById(id);
     }
 
-
-    private Order createOrder(Bucket bucket){
+//to be seen
+    private Order builOrderFromBucket(Bucket bucket){
         Order order = new Order();
         order.setOrderDate(LocalDateTime.now());
         order.setOrderStatus(OrderStatus.NEW);

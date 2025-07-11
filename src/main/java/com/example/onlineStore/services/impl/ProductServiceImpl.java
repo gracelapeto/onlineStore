@@ -66,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product>getAllByAuthor(Long authorId){
+    public List<Product>getAllProductByAuthor(Long authorId){
         return productRepository.getAllByAuthor_Id((authorId));
 
     }
