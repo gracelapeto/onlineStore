@@ -9,5 +9,5 @@ import lombok.Data;
 @Data
 public class BucketResponseDto {
     private Long id;
-    private List<BucketItem> items = new ArrayList<>();
+    private List<BucketItemDto> items = new ArrayList<>();
 }

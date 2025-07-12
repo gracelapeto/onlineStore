@@ -9,6 +9,6 @@ import java.util.List;
 @Data
 public class BucketRequestDto {
     private Long id;
-    private User user;
-    private List<BucketItem> items = new ArrayList<>();
+    private Long userId;
+    private List<BucketItemDto> items = new ArrayList<>();
 }
