@@ -4,6 +4,7 @@ import com.example.onlineStore.security.UserDetailsServicesImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,6 +18,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final static String[] allowedetEndpoint={"/user/register", "/product/all", "/"};
 
     private final UserDetailsServicesImpl userDetailsService;
 
@@ -39,10 +42,16 @@ public class SecurityConfig {
                                            AuthenticationManager authenticationManager) throws Exception {
         http
                 .authenticationManager(authenticationManager)
-                .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/product/all", "/user/register").permitAll()
-                        .requestMatchers("/user/create").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+                .authorizeHttpRequests(auth -> auth
+
+                        .requestMatchers(allowedetEndpoint).permitAll()
+
+
+                        .requestMatchers(HttpMethod.POST, "/api/orders/").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/product/all").authenticated()
+
+                        .anyRequest().permitAll()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())

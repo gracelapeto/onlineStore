@@ -6,14 +6,15 @@ import com.example.onlineStore.entities.Product;
 import com.example.onlineStore.services.AuthorService;
 import com.example.onlineStore.services.CategoryService;
 import com.example.onlineStore.services.ProductService;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
-@RequestMapping("/Producters")
+@RequestMapping("/products")
 public class ProductContorller {
 
     private final ProductService productService;
@@ -56,7 +57,7 @@ public class ProductContorller {
     public ResponseEntity<List<Product>> findByCategory(@RequestParam Long categoryId) {
         return ResponseEntity.ok(productService.findProductByCategory(categoryId));
     }
-    @GetMapping("products")
+    @GetMapping("/products/{authorId}" )
     public List<Product> getAllProductByAuthor(@PathVariable Long authorId) {
         return authorService.getAllByAuthor(authorId);
     }
