@@ -16,12 +16,11 @@ public class UserDetailsImpl implements UserDetails {
     private List<GrantedAuthority> authorities;
 
     public UserDetailsImpl(User user) {
-            this.username = user.getUsername();
-            this.password = user.getPassword();
-            this.active = user.getActive();
-            this.authorities=List.of(new SimpleGrantedAuthority(user.getRole().name()));
-        }
-
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.active = user.getActive();
+        this.authorities = List.of(new SimpleGrantedAuthority(user.getRole().name()));
+    }
 
 
     @Override
@@ -38,6 +37,7 @@ public class UserDetailsImpl implements UserDetails {
     public String getUsername() {
         return username;
     }
+
     @Override
     public boolean isEnabled() {
         return active;
