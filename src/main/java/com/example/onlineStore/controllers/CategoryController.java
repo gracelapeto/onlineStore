@@ -25,13 +25,13 @@ public class CategoryController {
         return ResponseEntity.ok(createdCategory);
     }
 
-    @PutMapping("/id")
+    @PutMapping("/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category categoryDetails) {
         Category updatedCategory = categoryService.updateCategory(id, categoryDetails);
         return ResponseEntity.ok(updatedCategory);
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
         Category category = categoryService.findById(id);
         return ResponseEntity.ok(category);
@@ -43,7 +43,7 @@ public class CategoryController {
         return ResponseEntity.ok(categories);
     }
 
-    @GetMapping("/name")
+    @GetMapping("/name/{name}")
     public ResponseEntity<Category> getCategoryByName(@PathVariable String name) {
         Category category = categoryService.findByName(name);
         return ResponseEntity.ok(category);

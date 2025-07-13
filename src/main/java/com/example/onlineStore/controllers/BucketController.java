@@ -10,6 +10,7 @@ import com.example.onlineStore.entities.User;
 import com.example.onlineStore.repositories.ProductRepository;
 import com.example.onlineStore.repositories.UserRepository;
 import com.example.onlineStore.services.BucketService;
+import com.example.onlineStore.services.UserService;
 import com.example.onlineStore.services.impl.BucketServiceImp;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
@@ -25,6 +26,7 @@ public class BucketController {
     private final BucketService bucketService;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
+    private final UserService userService;
 
     @PostMapping("/createBucketByUser")
     public ResponseEntity<BucketResponseDto> createBucket(@RequestBody User user) {
@@ -34,7 +36,7 @@ public class BucketController {
 
 
     @PostMapping("/addProduct")
-    public ResponseEntity<String> addProductToBucket(@RequestParam AddProductBucketDto dto) {
+    public ResponseEntity<String> addProductToBucket(@RequestBody AddProductBucketDto dto) {
         User user = userRepository.findById(dto.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -51,12 +53,20 @@ public class BucketController {
         return ResponseEntity.ok(bucketService.getByUser());
     }
 
+
     @DeleteMapping("/clear/{userId}")
     public ResponseEntity<String> clearUserBucket(@PathVariable Long userId) {
+        User loggedUser = userService.getLoggedUser();
+        boolean isAdmin = loggedUser.getRole().name().equals("ROLE_ADMIN");
+        boolean isOwner = loggedUser.getId().equals(userId);
+
+        if (!isOwner && !isAdmin) {
+            return ResponseEntity.status(403).body("You are not authorized to clear this bucket.");
+        }
+
         bucketService.clearBucket(userId);
         return ResponseEntity.ok("Bucket cleared for user with ID: " + userId);
-    }
-}
+    }}
 
 
 

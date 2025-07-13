@@ -19,7 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final static String[] allowedetEndpoint={"/user/register", "/product/all", "/"};
+    private final static String[] allowedetEndpoint = {"/api/users/register", "/product/all", "/"};
 
     private final UserDetailsServicesImpl userDetailsService;
 
@@ -38,20 +38,23 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http,
-                                           AuthenticationManager authenticationManager) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
         http
-                .authenticationManager(authenticationManager)
+                .authenticationManager(authManager)
                 .authorizeHttpRequests(auth -> auth
 
                         .requestMatchers(allowedetEndpoint).permitAll()
 
+                        .requestMatchers(HttpMethod.POST, "/api/orders/**").hasRole("USER")
 
-                        .requestMatchers(HttpMethod.POST, "/api/orders/").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/product/all").authenticated()
 
-                        .anyRequest().permitAll()
+                        .requestMatchers(HttpMethod.POST, "/product/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/product/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/product/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/categories/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/categories/**").hasRole("ADMIN")
+
+                        .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
