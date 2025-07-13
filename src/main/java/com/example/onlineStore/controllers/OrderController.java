@@ -22,19 +22,23 @@ public class OrderController {
         Order createdOrder = orderService.create(orderDto);
         return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
     }
+
     @GetMapping("/all")
     public ResponseEntity<List<Order>> findAllOrders() {
         return ResponseEntity.ok(orderService.findAll());
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Order> findOrderById(@PathVariable Long id) {
         return ResponseEntity.ok(orderService.findById(id));
     }
+
     @GetMapping("/status")
     public ResponseEntity<List<Order>> findOrdersByStatus(@RequestParam String status) {
         List<Order> orders = orderService.getOrdersByStatusForCurrentUser(status);
         return ResponseEntity.ok(orders);
     }
+
     @DeleteMapping("/{delete}")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
         orderService.delete(id);

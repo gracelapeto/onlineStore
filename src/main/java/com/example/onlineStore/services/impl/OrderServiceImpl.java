@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService {
     private UserService userService;
 
     @Override
-    public Order create(OrderCreateDto dto){
+    public Order create(OrderCreateDto dto) {
         Order order = new Order();
         order.setOrderDate(LocalDateTime.now());
         order.setName(dto.getName());
@@ -38,10 +38,10 @@ public class OrderServiceImpl implements OrderService {
         Order savedOrder = orderRepository.save(order);
         AtomicReference<Double> totalPrice = new AtomicReference<>(0.0);
 
-        List<OrderLine> orderLines =orderLineRepository.findAllById(dto.getOrderLinesIds());
-        orderLines.forEach(orderLine->{
+        List<OrderLine> orderLines = orderLineRepository.findAllById(dto.getOrderLinesIds());
+        orderLines.forEach(orderLine -> {
             orderLine.setOrder(savedOrder);
-            totalPrice.set(totalPrice.get()+(orderLine.getProduct().getPrice() * orderLine.getQuantity()));
+            totalPrice.set(totalPrice.get() + (orderLine.getProduct().getPrice() * orderLine.getQuantity()));
 
 
         });
@@ -54,33 +54,36 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findAll(){
+    public List<Order> findAll() {
         return orderRepository.findAll();
     }
+
     @Override
-    public Order findById(Long id){
+    public Order findById(Long id) {
         return orderRepository.findById(id)
-                .orElseThrow(() ->  OnlineStoreException.notFound(Order.class,id.toString()));
+                .orElseThrow(() -> OnlineStoreException.notFound(Order.class, id.toString()));
     }
+
     @Override
-    public void delete(Long id){
+    public void delete(Long id) {
         orderRepository.deleteById(id);
     }
 
-//to be seen
-    private Order builOrderFromBucket(Bucket bucket){
+    //to be seen
+    private Order builOrderFromBucket(Bucket bucket) {
         Order order = new Order();
         order.setOrderDate(LocalDateTime.now());
         order.setOrderStatus(OrderStatus.NEW);
         return order;
     }
+
     @Override
     public List<Order> getOrdersByStatusForCurrentUser(String status) {
         User user = userService.getLoggedUser();
         OrderStatus orderStatus = OrderStatus.valueOf(status.toUpperCase());
         return orderRepository.findByUserAndOrderStatus(user, orderStatus);
     }
-    }
+}
 
 
 

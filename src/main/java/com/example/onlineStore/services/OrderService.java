@@ -20,4 +20,5 @@ public interface OrderService {
     void delete(Long id);
 
     List<Order> getOrdersByStatusForCurrentUser(String status);
+
 }
